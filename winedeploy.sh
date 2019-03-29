@@ -7,7 +7,7 @@ sudo apt install p7zip-full icoutils # For Notepad++
 
 # Get Wine
 # wget -c https://www.playonlinux.com/wine/binaries/linux-x86/PlayOnLinux-wine-3.5-linux-x86.pol
-wget -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-amd64/PlayOnLinux-wine-4.0-upstream-linux-amd64.tar.gz
+wget -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-amd64/PlayOnLinux-wine-4.4-upstream-linux-amd64.tar.gz
 
 # Get old Wine (for icons and such)
 # apt download libc6:i386
@@ -78,13 +78,6 @@ export LD_LIBRARY_PATH="$HERE/usr/lib/i386-linux-gnu/alsa-lib":$LD_LIBRARY_PATH
 
 # LD
 export WINELDLIBRARY="$HERE/lib/ld-linux.so.2"
-
-export WINEDLLOVERRIDES="mscoree,mshtml=" # Do not ask to install Mono or Gecko
-export WINEDEBUG=-all # Do not print Wine debug messages
-
-# Workaround for: wine: loadlocale.c:129: _nl_intern_locale_data:
-# Assertion `cnt < (sizeof (_nl_value_type_LC_TIME) / sizeof (_nl_value_type_LC_TIME[0]))' failed.
-export LC_ALL=C LANGUAGE=C LANG=C
 
 # Load Explorer if no arguments given
 APPLICATION=""

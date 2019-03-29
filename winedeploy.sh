@@ -31,7 +31,7 @@ apt download fuse unionfs-fuse libfuse2 # 32-bit versions seemingly do not work 
 # apt download libc6:i386 # It is already included above
 
 mkdir -p ./Wine.AppDir
-tar xfv PlayOnLinux-wine-* -C ./Wine.AppDir --strip-components=2 wineversion/ 
+tar xfv PlayOnLinux-wine-* -C ./Wine.AppDir
 cd Wine.AppDir/
 
 # Extract debs

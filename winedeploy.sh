@@ -7,7 +7,7 @@ sudo apt install p7zip-full icoutils # For Notepad++
 
 # Get Wine
 # wget -c https://www.playonlinux.com/wine/binaries/linux-x86/PlayOnLinux-wine-3.5-linux-x86.pol
-wget -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-amd64/PlayOnLinux-wine-4.4-upstream-linux-amd64.tar.gz
+wget -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-amd64/PlayOnLinux-wine-4.0-upstream-linux-amd64.tar.gz
 
 # Get old Wine (for icons and such)
 # apt download libc6:i386
@@ -31,7 +31,7 @@ apt download fuse unionfs-fuse libfuse2 # 32-bit versions seemingly do not work 
 # apt download libc6:i386 # It is already included above
 
 mkdir -p ./Wine.AppDir
-tar xfv PlayOnLinux-wine-* -C ./Wine.AppDir
+tar xfv PlayOnLinux-wine-* -C ./Wine.AppDir --strip-components=2 wineversion/ 
 cd Wine.AppDir/
 
 # Extract debs
@@ -78,6 +78,8 @@ export LD_LIBRARY_PATH="$HERE/usr/lib/i386-linux-gnu/alsa-lib":$LD_LIBRARY_PATH
 
 # LD
 export WINELDLIBRARY="$HERE/lib/ld-linux.so.2"
+
+export WINEDLLOVERRIDES="mscoree,mshtml=" # Do not ask to install Mono or Gecko
 
 # Load Explorer if no arguments given
 APPLICATION=""

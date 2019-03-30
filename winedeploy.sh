@@ -71,20 +71,48 @@ export LD_LIBRARY_PATH="$HERE/usr/lib/i386-linux-gnu":$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH="$HERE/lib":$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH="$HERE/lib/i386-linux-gnu":$LD_LIBRARY_PATH
 
-#Sound Library
-export LD_LIBRARY_PATH="$HERE/usr/lib/i386-linux-gnu/pulseaudio":$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH="$HERE/usr/lib/i386-linux-gnu/alsa-lib":$LD_LIBRARY_PATH
-
 #Font Config
 export FONTCONFIG_PATH="$HERE/etc/fonts"
 
-#LD
+# Sound Library
+export LD_LIBRARY_PATH="$HERE/usr/lib/i386-linux-gnu/pulseaudio":$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH="$HERE/usr/lib/i386-linux-gnu/alsa-lib":$LD_LIBRARY_PATH
+
+# LD
 export WINELDLIBRARY="$HERE/lib/ld-linux.so.2"
 
-if [ -n "$*" ] ; then
-    LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$HERE/bin/$@" | cat
+export WINEDLLOVERRIDES="mscoree,mshtml=" # Do not ask to install Mono or Gecko
+
+# Since the AppImage gets mounted at different locations, relying on "$HERE"
+# does not good to determine a unique string per application when inside an AppImage
+if [ -z "$APPIMAGE" ]  ; then
+  AppName=wine_$(echo "$HERE" | sha1sum | cut -d " " -f 1)
 else
-    LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$HERE/bin/wine" "$@" | cat
+  AppName=wine_$(echo "$APPIMAGE" | sha1sum | cut -d " " -f 1)
+fi
+
+# Allow the AppImage to be symlinked to e.g., /usr/bin/wineserver
+if [ ! -z $APPIMAGE ] ; then
+  BINARY_NAME=$(basename "$ARGV0")
+else
+  BINARY_NAME=$(basename "$0")
+fi
+if [ ! -z "$1" ] && [ -e "$HERE/bin/$1" ] ; then
+  MAIN="$HERE/bin/$1" ; shift
+elif [ ! -z "$1" ] && [ -e "$HERE/usr/bin/$1" ] ; then
+  MAIN="$HERE/usr/bin/$1" ; shift
+elif [ -e "$HERE/bin/$BINARY_NAME" ] ; then
+  MAIN="$HERE/bin/$BINARY_NAME"
+elif [ -e "$HERE/usr/bin/$BINARY_NAME" ] ; then
+  MAIN="$HERE/usr/bin/$BINARY_NAME"
+else
+  MAIN="$HERE/bin/wine"
+fi
+
+if [ -z "$APPLICATION" ] ; then
+  LD_PRELOAD="$HERE/lib/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$@" | cat
+else
+  LD_PRELOAD="$HERE/lib/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$APPLICATION" | cat
 fi
 EOF
 

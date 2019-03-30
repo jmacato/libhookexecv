@@ -30,7 +30,7 @@ apt download fuse unionfs-fuse libfuse2 # 32-bit versions seemingly do not work 
 # apt download libc6:i386 # It is already included above
 
 mkdir -p ./Wine.AppDir
-tar xfv PlayOnLinux-wine-* -C ./Wine.AppDir --strip-components=2 wineversion/ 
+tar xfv PlayOnLinux-wine-* -C ./Wine.AppDir 
 cd Wine.AppDir/
 
 # Extract debs
@@ -93,12 +93,12 @@ do
                 echo "Run Command: $Command"
                 ;;
              ?)
-                echo "unkonw argument"
+                echo "Unknown argument"
         exit 1
         ;;
         esac
 done
-
+s
 if [ -n "$Command" ] ; then
     if [ -n "$Args" ] ; then
         LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$HERE/bin/$Command" "$Args" | cat

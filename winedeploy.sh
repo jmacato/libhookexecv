@@ -79,7 +79,6 @@ export LD_LIBRARY_PATH="$HERE/usr/lib/i386-linux-gnu/alsa-lib":$LD_LIBRARY_PATH
 export WINELDLIBRARY="$HERE/lib/ld-linux.so.2"
 
 export WINEDLLOVERRIDES="mscoree,mshtml=" # Do not ask to install Mono or Gecko
-export WINEDEBUG=-all # Do not print Wine debug messages
 
 # Workaround for: wine: loadlocale.c:129: _nl_intern_locale_data:
 # Assertion `cnt < (sizeof (_nl_value_type_LC_TIME) / sizeof (_nl_value_type_LC_TIME[0]))' failed.

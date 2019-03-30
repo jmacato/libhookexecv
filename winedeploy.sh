@@ -162,7 +162,7 @@ cat > wine.desktop <<\EOF
 [Desktop Entry]
 Name=Wine
 Exec=AppRun
-Icon=wine.svg
+Icon=wine
 Type=Application
 Categories=Network;
 Name[en_US]=Wine

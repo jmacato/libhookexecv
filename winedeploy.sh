@@ -154,7 +154,6 @@ chmod +x AppRun
 
 # Why is this needed? Probably because our Wine was compiled on a different distribution
 ( cd ./lib/i386-linux-gnu/ ; ln -s libudev.so.1 libudev.so.0 )
-( cd ./usr/lib/i386-linux-gnu/ ; rm -f libpng12.so.0 ; ln -s ../../../lib/libpng12.so.0 . )
 rm -rf lib64/
 
 # Cannot move around share since Wine has the relative path to it; hence symlinking

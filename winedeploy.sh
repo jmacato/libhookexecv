@@ -200,12 +200,10 @@ ARCH=x86_64 ./appimagetool-x86_64.AppImage -g ./Wine.AppDir
 # Wine AppImage DONE. Now making a wineprefix for Notepad++
 #
 
-wget -c "https://notepad-plus-plus.org/repository/7.x/7.6.1/npp.7.6.1.bin.minimalist.7z"
-
 # Perhaps we can make this generic so as to convert all from portableapps.com in the same way
-# wget -c "http://download3.portableapps.com/portableapps/Notepad++Portable/NotepadPlusPlusPortable_7.6.paf.exe"
-# 7z x -y -otmp NotepadPlusPlusPortable_7.6.paf.exe 
-# mv tmp/* "$WINEPREFIX/drive_c/windows/system32/"
+wget -c "http://download3.portableapps.com/portableapps/Notepad++Portable/NotepadPlusPlusPortable_7.6.paf.exe"
+7z x -y -otmp NotepadPlusPlusPortable_7.6.paf.exe 
+mv tmp/* "$WINEPREFIX/drive_c/windows/system32/"
 
 # Icon
 rm ./Wine.AppDir/*.{svg,svgz,png,xpm} ./Wine.AppDir/.DirIcon || true

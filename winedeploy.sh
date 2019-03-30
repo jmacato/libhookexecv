@@ -162,7 +162,15 @@ rm -rf lib64/
 cp -r usr/share share/ && rm -rf usr/share
 ( cd usr/ ; ln -s ../share . )
 
-cp usr/share/applications/wine.desktop .
+cat > wine.desktop <<\EOF
+[Desktop Entry]
+Name=Wine
+Exec=AppRun
+Icon=wine
+Type=Application
+Categories=Network;
+Name[en_US]=Wine
+EOF
 
 touch wine.svg # FIXME
 

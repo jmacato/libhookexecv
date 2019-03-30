@@ -168,7 +168,7 @@ wget -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/ap
 chmod +x ./appimagetool-x86_64.AppImage
 ARCH=x86_64 ./appimagetool-x86_64.AppImage -g ./Wine.AppDir
 
-cat > Wine.desktop <<\EOF
+cat > wine.desktop <<\EOF
 [Desktop Entry]
 Name=Wine
 Exec=AppRun

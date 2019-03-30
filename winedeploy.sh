@@ -146,18 +146,6 @@ else
   LD_PRELOAD="$HERE/lib/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$APPLICATION" | cat
 fi
 EOF
-
-cat > wine.desktop <<\EOF
-[Desktop Entry]
-Name=Wine
-Exec=AppRun
-Icon=Wine
-Type=Application
-Categories=Network;
-Name[en_US]=Wine
-EOF
-
-
 chmod +x AppRun
 
 # Why is this needed? Probably because our Wine was compiled on a different distribution
@@ -170,6 +158,16 @@ rm -rf lib64/
 cp -r usr/share share/ && rm -rf usr/share
 ( cd usr/ ; ln -s ../share . )
 
+cat > wine.desktop <<\EOF
+[Desktop Entry]
+Name=Wine
+Exec=AppRun
+Icon=wine.svg
+Type=Application
+Categories=Network;
+Name[en_US]=Wine
+EOF
+
 touch wine.svg # FIXME
 
 export VERSION=$(strings ./lib/libwine.so.1 | grep wine-[\.0-9] | cut -d "-" -f 2)
@@ -179,7 +177,6 @@ cd ..
 wget -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
 chmod +x ./appimagetool-x86_64.AppImage
 ARCH=x86_64 ./appimagetool-x86_64.AppImage -g ./Wine.AppDir
-
 
 # Delete unneeded files
 SQ=$(readlink -f .)/Wine.AppDir/

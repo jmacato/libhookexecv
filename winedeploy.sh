@@ -168,6 +168,15 @@ wget -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/ap
 chmod +x ./appimagetool-x86_64.AppImage
 ARCH=x86_64 ./appimagetool-x86_64.AppImage -g ./Wine.AppDir
 
+cat > Wine.desktop <<\EOF
+[Desktop Entry]
+Name=Wine
+Exec=AppRun
+Icon=Wine
+Type=Application
+Categories=Network;
+Name[en_US]=Wine
+EOF
 
 # Delete unneeded files
 SQ=$(readlink -f .)/Wine.AppDir/

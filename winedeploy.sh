@@ -158,62 +158,16 @@ rm -rf lib64/
 cp -r usr/share share/ && rm -rf usr/share
 ( cd usr/ ; ln -s ../share . )
 
-cp usr/share/applications/wine.desktop .
-cat usr/share/applications/wine.desktop
-
 touch wine.svg # FIXME
 
 export VERSION=$(strings ./lib/libwine.so.1 | grep wine-[\.0-9] | cut -d "-" -f 2)
 
 cd ..
 
-export WINEDLLOVERRIDES="mscoree,mshtml="
-mkdir -p ./Wine.AppDir/wineprefixnew
-export WINEPREFIX=$(readlink -f ./Wine.AppDir/wineprefixnew)
-./Wine.AppDir/AppRun wineboot.exe
-./Wine.AppDir/AppRun wineboot.exe
-sleep 5
-# Need to ensure that we have system.reg userdef.reg user.reg, otherwise explorer.exe will not launch
-ls -lh "$WINEPREFIX"
-
-# echo "disable" > "$WINEPREFIX/.update-timestamp" # Stop Wine from updating $WINEPREFIX automatically from time to time # This leads to non-working WINEPREFIX!
-( cd "$WINEPREFIX/drive_c/" ; rm -rf users ; ln -s /home users ) || true # Do not hardcode username in wineprefix
-ls -lh "$WINEPREFIX/"
-mv ./Wine.AppDir/wineprefixnew ./Wine.AppDir/wineprefix && export WINEPREFIX=$(readlink -f ./Wine.AppDir/wineprefix)
-
 wget -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
 chmod +x ./appimagetool-x86_64.AppImage
 ARCH=x86_64 ./appimagetool-x86_64.AppImage -g ./Wine.AppDir
 
-#
-# Wine AppImage DONE. Now making a wineprefix for Notepad++
-#
-
-export VERSION=$(wget -q "https://notepad-plus-plus.org/repository/7.x/?C=M;O=D" -O - | grep href | grep '/"' | grep -v "unstable" | grep -v "repository" | cut -d ">" -f 6 | cut -d '"' -f 2| sed  -e 's|/||g' | sort -r -V | uniq | head -n 1)
-SHORTVERSION=$(echo $VERSION | cut -d "." -f 1).x
-wget -c "https://notepad-plus-plus.org/repository/$SHORTVERSION/$VERSION/npp.$VERSION.bin.minimalist.7z"
-7z x -o"$WINEPREFIX/drive_c/windows/system32/" npp*.7z # system32 is on Windows $PATH equivalent
-
-# Perhaps we can make this generic so as to convert all from portableapps.com in the same way
-# wget -c "http://download3.portableapps.com/portableapps/Notepad++Portable/NotepadPlusPlusPortable_7.6.paf.exe"
-# 7z x -y -otmp NotepadPlusPlusPortable_7.6.paf.exe 
-# mv tmp/* "$WINEPREFIX/drive_c/windows/system32/"
-
-# Icon
-rm ./Wine.AppDir/*.{svg,svgz,png,xpm} ./Wine.AppDir/.DirIcon || true
-wrestool -x -t 14 ./Wine.AppDir/wineprefix/drive_c/windows/system32/notepad++.exe > icon.ico
-convert icon.ico icon.png
-mkdir -p ./Wine.AppDir/usr/share/icons/hicolor/{256x256,48x48,16x16}/apps/
-cp icon-3.png ./Wine.AppDir/usr/share/icons/hicolor/256x256/apps/notepadpp.png
-cp icon-6.png ./Wine.AppDir/usr/share/icons/hicolor/48x48/apps/notepadpp.png
-cp icon-8.png ./Wine.AppDir/usr/share/icons/hicolor/16x16/apps/notepadpp.png
-cp icon-3.png ./Wine.AppDir/notepadpp.png
-sed -i -e 's|^Icon=.*|Icon=notepadpp|g' ./Wine.AppDir/*.desktop
-
-sed -i -e 's|^Name=.*|Name=NotepadPlusPlus|g' ./Wine.AppDir/*.desktop
-sed -i -e 's|^Name\[.*||g' ./Wine.AppDir/*.desktop
-sed -i -e 's|winecfg|notepad++.exe|g' ./Wine.AppDir/AppRun
-ls -lh "$WINEPREFIX"
 
 # Delete unneeded files
 SQ=$(readlink -f .)/Wine.AppDir/
@@ -234,4 +188,4 @@ find Wine.AppDir/ -type d -empty -delete # Remove empty directories
 
 ARCH=x86_64 ./appimagetool-x86_64.AppImage -g ./Wine.AppDir
 
-( cd ./Wine.AppDir ; tar cfvz ../wineprefix.tar.gz wineprefix/ )
+( cd ./Wine.AppDir )

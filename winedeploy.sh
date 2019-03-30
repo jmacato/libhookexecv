@@ -6,7 +6,7 @@ sudo apt-get update
 sudo apt install p7zip-full icoutils # For Notepad++
 
 # Get Wine
-wget -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-amd64/PlayOnLinux-wine-4.4-upstream-linux-amd64.tar.gz
+wget -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.4-upstream-linux-x86.tar.gz
 
 # Get old Wine (for icons and such)
 # apt download libc6:i386

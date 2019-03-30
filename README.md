@@ -1,4 +1,4 @@
-# libhookexecv [![Build Status](https://travis-ci.com/jmacato/libhookexecv.svg?branch=master)](https://travis-ci.com/jmacato/libhookexecv)
+# libhookexecv [![Build Status](https://travis-ci.org/jmacato/libhookexecv.svg?branch=master)](https://travis-ci.org/jmacato/libhookexecv/)
 
 Hook Wine execv syscall to use special ld.so in order to make it fully relocateable- __WORK IN PROGRESS__
 

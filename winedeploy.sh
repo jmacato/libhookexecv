@@ -98,7 +98,7 @@ do
         ;;
         esac
 done
-s
+
 if [ -n "$Command" ] ; then
     if [ -n "$Args" ] ; then
         LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$HERE/bin/$Command" "$Args" | cat
